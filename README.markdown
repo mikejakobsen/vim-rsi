@@ -1,52 +1,69 @@
-# rsi.vim
+# The only nice thing feautured in Emacs
+MAPS                                            *rsi-maps*
 
-You know Readline key bindings?  Of course you do, they're in your shell, your
-REPL, and perhaps even the GUI for your OS.  They're similar to Emacs
-key bindings (C-a for home), but with several concessions for UNIX (C-w for
-delete word).
+                                                *rsi-CTRL-A*
+<C-a>                   Go to beginning of line.
 
-With rsi.vim, I've taken that same concession philosophy and extended it to
-Vim. Get the most useful of the ubiquitous key bindings without blindly
-overriding built-in Vim functionality.
+                                                *rsi-CTRL-X_CTRL-A*
+<C-x><C-a>              Access Vim's built-in |i_CTRL-A| or |c_CTRL-A|.
 
-## Features
+                                                *rsi-CTRL-B*
+<C-b>                   Go backwards one character.  On a blank line, kill it
+                        and go back to the previous line.
 
-* Readline mappings are provided in insert mode and command line mode.  Normal
-  mode is deliberately omitted.
-* Important Vim key bindings (like insert mode's C-n and C-p completion) are
-  not overridden.
-* Meta key bindings are provided in a way that works in the terminal without
-  the perils of remapping escape.
-* C-d, C-e, and C-f are mapped such that they perform the Readline behavior in
-  the middle of the line and the Vim behavior at the end.  (Think about it.)
+                                                *rsi-CTRL-D*
+<C-d>                   Delete character in front of cursor.  Falls back to
+                        |i_CTRL-D| or |c_CTRL-D| at the end of the line.
 
-## Installation
+                                                *rsi-CTRL-E*
+<C-e>                   Go to end of line.  Falls back to |i_CTRL-E| if
+                        already at the end of the line.  (|c_CTRL-E| already
+                        goes to end of line, so it is not mapped.)
 
-If you don't have a preferred installation method, I recommend
-installing [pathogen.vim](https://github.com/tpope/vim-pathogen), and
-then simply copy and paste:
+                                                *rsi-CTRL-F*
+<C-f>                   Move forward one character.  Falls back to
+                        |i_CTRL-F| or |c_CTRL-F| at the end of the line.
 
-    cd ~/.vim/bundle
-    git clone git://github.com/tpope/vim-rsi.git
+                                                *rsi-CTRL-G*
+<C-g>                   Return to normal mode from the |cmdline|.
 
-Once help tags have been generated, you can view the manual with
-`:help rsi`.
+                                                *rsi-CTRL-T*
+<C-t>                   Transpose two characters.  This is mapped in command
+                        line mode only, as |i_CTRL-T| is too important to
+                        clobber.
 
-## Contributing
+                                                *rsi-META-BS*
+<M-BS>                  Delete backward one word.
 
-See the contribution guidelines for
-[pathogen.vim](https://github.com/tpope/vim-pathogen#readme).
+                                                *rsi-META-b*
+<M-b>                   Go backwards one word.
 
-## Self-Promotion
+                                                *rsi-META-d*
+<M-d>                   Delete forwards one word.
 
-Like rsi.vim? Follow the repository on
-[GitHub](https://github.com/tpope/vim-rsi) and vote for it on
-[vim.org](http://www.vim.org/scripts/script.php?script_id=4359).  And if
-you're feeling especially charitable, follow [tpope](http://tpo.pe/) on
-[Twitter](http://twitter.com/tpope) and
-[GitHub](https://github.com/tpope).
+                                                *rsi-META-f*
+<M-f>                   Go forwards one word.
 
-## License
+                                                *rsi-META-n*
+<M-n>                   Equivalent to |c_<Down>| or |i_<Down>|.
 
-Copyright © Tim Pope.  Distributed under the same terms as Vim itself.
-See `:help license`.
+                                                *rsi-META-p*
+<M-p>                   Equivalent to |c_<Up>| or |i_<Up>|.
+
+In the terminal, the meta key sends escape, so mapping these would require
+mappings starting with escape in insert mode.  This makes Vim appear to lag
+for a second if you actually press just escape.  Instead, rsi.vim makes
+these available by telling Vim they are existing special keys. For example,
+the key code for <S-Left> is changed to <Esc>b.
+
+To disable meta maps, add the following to your vimrc:
+>
+    let g:rsi_no_meta = 1
+<
+ABOUT                                           *rsi-about*
+
+Grab the latest version or report a bug on GitHub:
+
+http://github.com/tpope/vim-rsi
+
+ vim:tw=78:et:ft=help:norl:
